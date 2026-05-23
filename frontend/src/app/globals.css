@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Syne:wght@400..800&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* Backgrounds */
+  --bg-base      : #080C14;   /* deepest background */
+  --bg-surface   : #0F1724;   /* page background */
+  --bg-card      : #141E2E;   /* card background */
+  --bg-elevated  : #1A2540;   /* hover / active states */
+  --bg-overlay   : #1E2D47;   /* modals, dropdowns */
+
+  /* Borders */
+  --border-subtle : rgba(255,255,255,0.06);
+  --border-default: rgba(255,255,255,0.10);
+  --border-strong : rgba(255,255,255,0.18);
+
+  /* Brand & Accents */
+  --blue         : #3B82F6;
+  --blue-glow    : rgba(59,130,246,0.15);
+  --blue-dim     : rgba(59,130,246,0.08);
+  --green        : #10B981;
+  --green-glow   : rgba(16,185,129,0.12);
+  --orange       : #F59E0B;
+  --orange-glow  : rgba(245,158,11,0.12);
+  --red          : #EF4444;
+  --red-glow     : rgba(239,68,68,0.12);
+
+  /* Text */
+  --text-primary : #F0F4FF;
+  --text-secondary: #8B9CBB;
+  --text-muted   : #4A5878;
+  --text-accent  : #3B82F6;
+
+  /* Special */
+  --gold         : #D4A843;  /* VIP client badge */
+  --gradient-hero: linear-gradient(135deg, #1E3A5F 0%, #0F1724 60%);
+
+  /* Font mappings */
+  --font-sans: 'DM Sans', sans-serif;
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+@theme inline {
+  --color-bg-base: var(--bg-base);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-card: var(--bg-card);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-overlay: var(--bg-overlay);
+
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong: var(--border-strong);
+
+  --color-brand-blue: var(--blue);
+  --color-brand-green: var(--green);
+  --color-brand-orange: var(--orange);
+  --color-brand-red: var(--red);
+  --color-brand-gold: var(--gold);
+
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom transitions and scrollbars for FinTech feel */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 3px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
