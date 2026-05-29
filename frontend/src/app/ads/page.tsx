@@ -125,7 +125,7 @@ export default function AdsPage() {
   return (
     <div className="max-w-6xl mx-auto w-full space-y-6">
       <div className="flex flex-col mb-6 items-center text-center">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+        <h1 className="text-3xl font-display font-extrabold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
           Gestion Meta Ads
         </h1>
         <p className="text-slate-400 mt-1">Suivi des crédits, dépenses et alertes de solde.</p>

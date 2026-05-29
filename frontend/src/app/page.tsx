@@ -720,8 +720,8 @@ export default function Home() {
               {/* Header Title */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-display font-extrabold tracking-tight text-[#F0F4FF]">
-                    Precision Finance.
+                  <h1 className="text-3xl font-display font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                    Precision Finance
                   </h1>
                   <p className="text-xs text-[#8B9CBB] mt-1 font-medium">
                     Suivi analytique et consolidation des balances multi-devises en temps réel.
@@ -1111,8 +1111,8 @@ export default function Home() {
               
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-display font-extrabold tracking-tight text-[#F0F4FF]">
-                    Annuaire des Tiers.
+                  <h1 className="text-3xl font-display font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                    Annuaire des Tiers
                   </h1>
                   <p className="text-xs text-[#8B9CBB] mt-1 font-medium">
                     Gestion des fiches de comptes clients, scoring de solvabilité et encours.
@@ -1225,8 +1225,8 @@ export default function Home() {
               
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-display font-extrabold tracking-tight text-[#F0F4FF]">
-                    Opérations Financières.
+                  <h1 className="text-3xl font-display font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                    Opérations Financières
                   </h1>
                   <p className="text-xs text-[#8B9CBB] mt-1 font-medium">
                     Grand livre comptable de toutes les ventes, charges, achats et virements.
@@ -1318,8 +1318,8 @@ export default function Home() {
               
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-display font-extrabold tracking-tight text-[#F0F4FF]">
-                    Factures Clients.
+                  <h1 className="text-3xl font-display font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                    Factures Clients
                   </h1>
                   <p className="text-xs text-[#8B9CBB] mt-1 font-medium">
                     Suivi des facturations B2B complexes, impressions de rapports financiers et encaissements.
@@ -1491,8 +1491,8 @@ export default function Home() {
               
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-display font-extrabold tracking-tight text-[#F0F4FF]">
-                    Comptes Bancaires.
+                  <h1 className="text-3xl font-display font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                    Comptes Bancaires
                   </h1>
                   <p className="text-xs text-[#8B9CBB] mt-1 font-medium">
                     Suivi des soldes des coffres physiques, banques institutionnelles et portefeuilles.
@@ -1613,8 +1613,8 @@ export default function Home() {
               
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-display font-extrabold tracking-tight text-[#F0F4FF]">
-                    Trésorerie & Cashflow.
+                  <h1 className="text-3xl font-display font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                    Trésorerie & Cashflow
                   </h1>
                   <p className="text-xs text-[#8B9CBB] mt-1 font-medium">
                     Grand journal des flux de liquidités prévisionnels à horizon J+30.
@@ -1669,8 +1669,8 @@ export default function Home() {
               
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-display font-extrabold tracking-tight text-[#F0F4FF]">
-                    Alertes de Risques.
+                  <h1 className="text-3xl font-display font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                    Alertes de Risques
                   </h1>
                   <p className="text-xs text-[#8B9CBB] mt-1 font-medium">
                     Moteur de surveillance automatisé des seuils comptables et retards de paiements.

@@ -269,7 +269,7 @@ export default function ExpensesPage() {
     <div className="w-full space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-400 to-indigo-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-display font-extrabold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
             Gestion des Charges & Dépenses
           </h1>
           <p className="text-slate-400 mt-2">Contrôlez, catégorisez et suivez l'impact de vos dépenses opérationnelles et publicitaires</p>

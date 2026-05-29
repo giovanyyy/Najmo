@@ -85,7 +85,7 @@ export default function ProductsPage() {
       <div className="flex flex-col mb-8">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-display font-extrabold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
               Catalogue Produits & Services
             </h1>
             <p className="text-slate-400 mt-1">Gérez vos produits et leurs règles de compatibilité.</p>

@@ -94,8 +94,8 @@ export default function UsersPage() {
         
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-display font-extrabold tracking-tight text-[#F0F4FF]">
-              Gestion des Utilisateurs.
+            <h1 className="text-3xl font-display font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              Gestion des Utilisateurs
             </h1>
             <p className="text-xs text-[#8B9CBB] mt-1 font-medium">
               Gérez les accès, rôles et habilitations des employés et comptables de votre ERP.

@@ -68,7 +68,9 @@ export default function AccountsPage() {
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-white">Gestion des Comptes</h1>
+            <h1 className="text-3xl font-display font-extrabold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
+              Gestion des Comptes
+            </h1>
             <p className="text-slate-400">Suivez vos soldes et l'historique de vos mouvements.</p>
           </div>
           {isAdmin && (

@@ -260,7 +260,7 @@ export default function TransfersPage() {
     <div className="w-full space-y-6">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-teal-400 to-indigo-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-display font-extrabold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
             Virements Internes
           </h1>
           <p className="text-slate-400 mt-2">Gérez les transferts de fonds et la conversion de devises entre vos comptes de trésorerie</p>

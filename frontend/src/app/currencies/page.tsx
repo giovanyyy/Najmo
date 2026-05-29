@@ -227,7 +227,7 @@ export default function CurrenciesPage() {
               </svg>
             </a>
             <div>
-              <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+              <h1 className="text-2xl font-display font-extrabold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
                 Taux de Change & Multi-devises
               </h1>
               <p className="text-xs text-slate-500 mt-0.5">
