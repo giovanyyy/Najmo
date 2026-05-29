@@ -43,7 +43,7 @@ export class LocalAuthService {
       isValid = await bcrypt.compare(password, user.local_password);
     } else {
       // Default initial admin login if no local_password set
-      if (email === 'admin@najmo.dz' && password === 'admin123') {
+      if (email === 'farouk@gmail.com' && password === 'farouk33') {
         isValid = true;
       }
     }
@@ -119,10 +119,10 @@ export class LocalAuthService {
     try {
       // Check if admin user already exists
       const existing = await this.prisma.users.findFirst({
-        where: { email: 'admin@najmo.dz' },
+        where: { email: 'farouk@gmail.com' },
       });
 
-      const hashedPassword = await bcrypt.hash('admin123', 10);
+      const hashedPassword = await bcrypt.hash('farouk33', 10);
 
       if (existing) {
         // Just make sure it has password set
@@ -131,12 +131,12 @@ export class LocalAuthService {
           data: {
             local_password: hashedPassword,
             role: 'ADMIN',
-            force_password_change: true,
+            force_password_change: false,
             is_active: true,
           },
         });
         return {
-          message: 'Admin déjà existant, mot de passe réinitialisé à admin123',
+          message: 'Admin déjà existant (Farouk)',
           user: { id: existing.id.toString(), email: existing.email, name: existing.full_name },
         };
       }
@@ -145,11 +145,11 @@ export class LocalAuthService {
       const user = await this.prisma.users.create({
         data: {
           keycloak_user_id: 'local-admin-' + Date.now(),
-          full_name: 'Administrateur NAJMO',
-          email: 'admin@najmo.dz',
+          full_name: 'farouk farouk',
+          email: 'farouk@gmail.com',
           local_password: hashedPassword,
           role: 'ADMIN',
-          force_password_change: true,
+          force_password_change: false,
           is_active: true,
         },
       });
@@ -164,9 +164,9 @@ export class LocalAuthService {
       return {
         message: '✅ Compte administrateur créé avec succès',
         credentials: {
-          email: 'admin@najmo.dz',
-          password: 'admin123',
-          note: 'Changez ce mot de passe dès que possible',
+          email: 'farouk@gmail.com',
+          password: 'farouk33',
+          note: 'Compte de Farouk initialisé',
         },
         user: { id: user.id.toString(), email: user.email, name: user.full_name },
       };

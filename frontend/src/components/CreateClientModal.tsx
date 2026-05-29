@@ -82,22 +82,33 @@ export default function ClientModal({ isOpen, onClose, accessToken, onSuccess, c
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-        <div className="p-6 border-b border-slate-800 flex justify-between items-center">
-          <h2 className="text-xl font-bold text-white">
-            {clientData ? `Modifier: ${clientData.full_name}` : "Nouveau Client"}
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#080C14]/80 backdrop-blur-md p-4">
+      <div className="bg-[#1E2D47] border border-[rgba(255,255,255,0.18)] w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 relative">
+        <button 
+          onClick={onClose} 
+          className="absolute top-6 right-6 text-[#8B9CBB] hover:text-white text-lg font-bold transition-colors"
+        >
+          ✕
+        </button>
+
+        <div className="p-6 pb-2">
+          <h2 className="text-xl font-display font-extrabold text-[#F0F4FF]">
+            {clientData ? `Modifier: ${clientData.full_name}` : "Nouveau Client."}
           </h2>
-          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">✕</button>
+          <p className="text-[11px] text-[#8B9CBB] mt-1">
+            {clientData ? "Modifiez les informations de facturation et de scoring." : "Renseignez les informations de facturation de votre nouveau tiers."}
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Nom Complet *</label>
+            <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+              Nom Complet *
+            </label>
             <input
               required
               type="text"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] placeholder-[#4A5878] focus:border-[#3B82F6]/60 transition-all focus:outline-none"
               placeholder="ex: Samir Ben"
               value={formData.full_name}
               onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
@@ -106,35 +117,41 @@ export default function ClientModal({ isOpen, onClose, accessToken, onSuccess, c
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Téléphone</label>
+              <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+                Téléphone
+              </label>
               <input
                 type="text"
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors"
+                className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] placeholder-[#4A5878] focus:border-[#3B82F6]/60 transition-all focus:outline-none"
                 placeholder="05..."
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Type</label>
+              <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+                Type
+              </label>
               <select
                 disabled={isEmploye}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] focus:border-[#3B82F6]/60 transition-all focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed appearance-none"
                 value={formData.client_type}
                 onChange={(e) => setFormData({ ...formData, client_type: e.target.value })}
               >
-                <option value="NORMAL">NORMAL</option>
-                <option value="VIP">VIP</option>
-                <option value="RISK">RISK</option>
+                <option value="NORMAL" className="bg-[#080C14]">NORMAL</option>
+                <option value="VIP" className="bg-[#080C14]">VIP</option>
+                <option value="RISK" className="bg-[#080C14]">RISK</option>
               </select>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Email</label>
+            <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+              Email
+            </label>
             <input
               type="email"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] placeholder-[#4A5878] focus:border-[#3B82F6]/60 transition-all focus:outline-none"
               placeholder="client@email.com"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -142,10 +159,12 @@ export default function ClientModal({ isOpen, onClose, accessToken, onSuccess, c
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Adresse</label>
+            <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+              Adresse
+            </label>
             <input
               type="text"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] placeholder-[#4A5878] focus:border-[#3B82F6]/60 transition-all focus:outline-none"
               placeholder="Adresse complète"
               value={formData.address}
               onChange={(e) => setFormData({ ...formData, address: e.target.value })}
@@ -153,9 +172,11 @@ export default function ClientModal({ isOpen, onClose, accessToken, onSuccess, c
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Notes</label>
+            <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+              Notes
+            </label>
             <textarea
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors h-20 resize-none"
+              className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] placeholder-[#4A5878] focus:border-[#3B82F6]/60 transition-all focus:outline-none h-20 resize-none"
               placeholder="Commentaires particuliers..."
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
@@ -166,14 +187,14 @@ export default function ClientModal({ isOpen, onClose, accessToken, onSuccess, c
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-medium transition-colors"
+              className="flex-1 py-2.5 bg-transparent hover:bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] text-slate-300 rounded-xl font-bold text-xs transition-all active:scale-95"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors shadow-lg shadow-emerald-900/20 disabled:opacity-50"
+              className="flex-1 py-2.5 bg-[#3B82F6] hover:bg-[#3B82F6]/90 active:scale-95 text-white font-bold text-xs rounded-xl shadow-[0_0_12px_rgba(59,130,246,0.3)] transition-all disabled:opacity-50"
             >
               {loading ? "Chargement..." : "Enregistrer"}
             </button>

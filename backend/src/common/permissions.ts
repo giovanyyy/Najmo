@@ -41,6 +41,7 @@ export const PERMISSIONS: Record<string, Role[]> = {
   'operations.uploadAttachments': ['ADMIN', 'EMPLOYEE', 'ACCOUNTANT'],
 
   // INVOICES
+  'invoices.view': ['ADMIN', 'EMPLOYEE', 'ACCOUNTANT'],
   'invoices.create': ['ADMIN', 'EMPLOYEE', 'ACCOUNTANT'],
   'invoices.editDraft': ['ADMIN', 'EMPLOYEE', 'ACCOUNTANT'],
   'invoices.delete': ['ADMIN'],

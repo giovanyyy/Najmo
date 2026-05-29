@@ -10,6 +10,9 @@ import AdsPage from "./ads/page";
 import ExpensesPage from "./expenses/page";
 import TransfersPage from "./transfers/page";
 import InvoicesPage from "./invoices/page";
+import CreateClientModal from "@/components/CreateClientModal";
+import AccountModal from "@/components/AccountModal";
+import UsersPage from "./users/page";
 
 // Types definition
 interface Client {
@@ -99,6 +102,14 @@ const MOCK_ACCOUNTS: Account[] = [
 export default function Home() {
   const { data: session } = useSession();
 
+  const userRoles = useMemo(() => {
+    return ((session?.user as any)?.roles || []).map((r: string) => r.toUpperCase());
+  }, [session]);
+
+  const isAdmin = useMemo(() => {
+    return userRoles.some((r: string) => ['ADMIN', 'ADMINISTRATEUR'].includes(r));
+  }, [userRoles]);
+
   // Navigation tab routing
   const [activeTab, setActiveTab] = useState<string>("dashboard");
   const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(true);
@@ -121,6 +132,10 @@ export default function Home() {
   const [isOpModalOpen, setIsOpModalOpen] = useState<boolean>(false);
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
   const [selectedClientDetail, setSelectedClientDetail] = useState<Client | null>(null);
+  const [isClientModalOpen, setIsClientModalOpen] = useState<boolean>(false);
+  const [selectedClientForEdit, setSelectedClientForEdit] = useState<any>(null);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState<boolean>(false);
+  const [selectedAccountForEdit, setSelectedAccountForEdit] = useState<any>(null);
 
   // Create Operation Form State
   const [newOpType, setNewOpType] = useState<"Vente" | "Achat" | "Charge" | "Virement">("Vente");
@@ -199,6 +214,9 @@ export default function Home() {
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
       };
+      if ((session as any)?.accessToken) {
+        headers["Authorization"] = `Bearer ${(session as any).accessToken}`;
+      }
       const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
       // 1. Fetch Clients
@@ -281,9 +299,13 @@ export default function Home() {
     }
   };
 
-  // Simulating the high-precision FinTech count-up on load & fetching backend data
+  // Sync live backend data whenever session is resolved or updated
   useEffect(() => {
     fetchLiveBackendData();
+  }, [session]);
+
+  // Simulating the high-precision FinTech count-up on load
+  useEffect(() => {
     const targetRevenue = 12450000;
     const targetProfit = 5620000;
     let revProgress = 0;
@@ -549,35 +571,70 @@ export default function Home() {
                     </span>
                   )}
                 </button>
+                {isAdmin && (
+                  <button
+                    onClick={() => setActiveTab("users")}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                      activeTab === "users"
+                        ? "bg-[#1A2540] text-[#3B82F6] border-l-2 border-[#3B82F6] font-bold"
+                        : "text-[#8B9CBB] hover:bg-[#141E2E] hover:text-[#F0F4FF]"
+                    }`}
+                  >
+                    <span className="text-sm">👥</span>
+                    {isSidebarExpanded && <span>Utilisateurs</span>}
+                  </button>
+                )}
               </nav>
             </div>
           </div>
         </div>
 
         {/* Collapsed toggle and User Info Bottom */}
-        <div className="border-t border-[rgba(255,255,255,0.06)] p-3">
+        <div className="border-t border-[rgba(255,255,255,0.06)] p-3.5 space-y-3.5">
           {!isSidebarExpanded && (
             <button 
               onClick={() => setIsSidebarExpanded(true)}
-              className="w-full flex items-center justify-center p-2 hover:bg-[#1A2540] rounded-lg text-[#8B9CBB]"
+              className="w-full flex items-center justify-center p-2 hover:bg-[#1A2540] rounded-lg text-[#8B9CBB] mb-2"
             >
               ▶
             </button>
           )}
           
-          <div className="flex items-center gap-2 overflow-hidden mt-2">
-            <div className="w-8 h-8 rounded-full bg-[#1A2540] flex items-center justify-center text-xs font-bold text-[#3B82F6] border border-[#3B82F6]/30 flex-shrink-0">
-              FE
+          {/* User Profile Card */}
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#3B82F6] to-[#1D4ED8] flex items-center justify-center text-sm font-black text-white shadow-[0_0_12px_rgba(59,130,246,0.3)] border border-[#3B82F6]/30 flex-shrink-0">
+              {session?.user?.name ? session.user.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase() : "FE"}
             </div>
             {isSidebarExpanded && (
               <div className="overflow-hidden flex-1">
-                <p className="text-[11px] font-bold text-[#F0F4FF] truncate">Farouk El-Amine</p>
-                <span className="px-1.5 py-0.2 bg-[rgba(212,168,67,0.15)] text-[#D4A843] border border-[#D4A843]/30 text-[8px] font-black rounded uppercase tracking-wider">
-                  Admin
-                </span>
+                <p className="text-xs font-bold text-[#F0F4FF] truncate leading-tight">{session?.user?.name || "Farouk El-Amine"}</p>
+                <div className="mt-1">
+                  <span className="px-1.5 py-0.5 bg-[rgba(212,168,67,0.15)] text-[#D4A843] border border-[#D4A843]/30 text-[8px] font-black rounded uppercase tracking-wider">
+                    {((session as any)?.userRoles?.[0]) || "Admin"}
+                  </span>
+                </div>
               </div>
             )}
           </div>
+          
+          {/* Logout Button */}
+          {isSidebarExpanded ? (
+            <button
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold text-[#EF4444] bg-[#EF4444]/5 hover:bg-[#EF4444]/15 border border-[#EF4444]/15 hover:border-[#EF4444]/30 transition-all duration-200 active:scale-[0.97]"
+            >
+              <span className="text-sm">🚪</span>
+              <span className="truncate">Se déconnecter</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => signOut({ callbackUrl: "/" })}
+              title="Déconnexion"
+              className="w-10 h-10 mx-auto flex items-center justify-center rounded-xl text-sm text-[#EF4444] bg-[#EF4444]/5 hover:bg-[#EF4444]/15 border border-[#EF4444]/15 hover:border-[#EF4444]/30 transition-all duration-200 active:scale-[0.97]"
+            >
+              🚪
+            </button>
+          )}
         </div>
       </aside>
 
@@ -1061,6 +1118,15 @@ export default function Home() {
                     Gestion des fiches de comptes clients, scoring de solvabilité et encours.
                   </p>
                 </div>
+                <button 
+                  onClick={() => {
+                    setSelectedClientForEdit(null);
+                    setIsClientModalOpen(true);
+                  }}
+                  className="px-4 py-2 bg-[#3B82F6] hover:bg-[#3B82F6]/90 active:scale-95 text-white font-bold text-xs rounded-xl shadow-[0_0_12px_rgba(59,130,246,0.3)] transition-all flex items-center gap-1.5"
+                >
+                  <span>+</span> Nouveau Client
+                </button>
               </div>
 
               {/* Table client */}
@@ -1118,12 +1184,27 @@ export default function Home() {
                           </span>
                         </td>
                         <td className="p-4 text-center">
-                          <div className="flex justify-center gap-3">
+                          <div className="flex justify-center gap-2">
                             <button 
                               onClick={() => setSelectedClientDetail(cl)}
                               className="px-2 py-1 bg-[#080C14] hover:bg-[#3B82F6] text-[#3B82F6] hover:text-white rounded text-[10px] font-bold uppercase transition-colors"
                             >
                               Fiche
+                            </button>
+                            <button 
+                              onClick={() => {
+                                setSelectedClientForEdit({
+                                  id: cl.id,
+                                  full_name: cl.name,
+                                  client_type: cl.type === "VIP" ? "VIP" : cl.type === "Risque" ? "RISK" : "NORMAL",
+                                  email: cl.email,
+                                  phone: cl.phone,
+                                });
+                                setIsClientModalOpen(true);
+                              }}
+                              className="px-2 py-1 bg-[#080C14] hover:bg-emerald-600 text-emerald-500 hover:text-white rounded text-[10px] font-bold uppercase transition-colors"
+                            >
+                              Modifier
                             </button>
                           </div>
                         </td>
@@ -1417,6 +1498,15 @@ export default function Home() {
                     Suivi des soldes des coffres physiques, banques institutionnelles et portefeuilles.
                   </p>
                 </div>
+                <button 
+                  onClick={() => {
+                    setSelectedAccountForEdit(null);
+                    setIsAccountModalOpen(true);
+                  }}
+                  className="px-4 py-2 bg-[#3B82F6] hover:bg-[#3B82F6]/90 active:scale-95 text-white font-bold text-xs rounded-xl shadow-[0_0_12px_rgba(59,130,246,0.3)] transition-all flex items-center gap-1.5"
+                >
+                  <span>+</span> Nouveau Compte
+                </button>
               </div>
 
               {/* Accounts cards grid */}
@@ -1471,6 +1561,23 @@ export default function Home() {
 
                         {/* Quick actions buttons visible on row hover */}
                         <div className="flex gap-2">
+                          <button 
+                            onClick={() => {
+                              setSelectedAccountForEdit({
+                                id: acc.id,
+                                name: acc.name,
+                                account_type: acc.type === 'Cash' ? 'CASH' : acc.type === 'Meta' ? 'ADS' : acc.type === 'Crypto' ? 'CRYPTO' : 'BANK',
+                                currency: acc.currency,
+                                initial_balance: acc.balance,
+                                is_active: true,
+                              });
+                              setIsAccountModalOpen(true);
+                            }}
+                            className="px-2.5 py-1 bg-[#080C14] hover:bg-[#3B82F6]/20 text-[#3B82F6] hover:text-white rounded text-[10px] font-black uppercase transition-colors"
+                            title="Modifier"
+                          >
+                            ✏️
+                          </button>
                           <button 
                             onClick={() => {
                               addToast("info", "Quick Action", `Dépôt rapide initié sur ${acc.name}.`);
@@ -1632,6 +1739,7 @@ export default function Home() {
           {activeTab === "expenses" && <ExpensesPage />}
           {activeTab === "transfers" && <TransfersPage />}
           {activeTab === "payments" && <InvoicesPage />}
+          {activeTab === "users" && <UsersPage />}
 
         </main>
       </div>
@@ -1848,6 +1956,27 @@ export default function Home() {
             </div>
           </div>
         </div>
+      )}
+
+      {isClientModalOpen && (
+        <CreateClientModal
+          isOpen={isClientModalOpen}
+          onClose={() => setIsClientModalOpen(false)}
+          onSuccess={fetchLiveBackendData}
+          accessToken={(session as any)?.accessToken}
+          userRoles={(session as any)?.user?.roles || []}
+          clientData={selectedClientForEdit}
+        />
+      )}
+
+      {isAccountModalOpen && (
+        <AccountModal
+          isOpen={isAccountModalOpen}
+          onClose={() => setIsAccountModalOpen(false)}
+          onSuccess={fetchLiveBackendData}
+          accessToken={(session as any)?.accessToken}
+          account={selectedAccountForEdit}
+        />
       )}
 
       {/* ────────────────────────────────────────────────────────

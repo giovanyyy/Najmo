@@ -52,95 +52,114 @@ export function CreateUserModal({ isOpen, onClose, onSuccess, accessToken }: Cre
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl w-full max-w-md shadow-2xl">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-slate-100">Ajouter un Utilisateur</h2>
-          <button onClick={onClose} className="text-slate-500 hover:text-slate-300 transition-colors">
-            ✕
-          </button>
+    <div className="fixed inset-0 bg-[#080C14]/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
+      <div className="bg-[#1E2D47] border border-[rgba(255,255,255,0.18)] rounded-2xl w-full max-w-md shadow-2xl p-6 relative animate-in fade-in zoom-in duration-200">
+        <button 
+          onClick={onClose} 
+          className="absolute top-6 right-6 text-[#8B9CBB] hover:text-white text-lg font-bold transition-colors"
+        >
+          ✕
+        </button>
+
+        <div className="mb-6">
+          <h2 className="text-xl font-display font-extrabold text-[#F0F4FF]">
+            Nouveau Collaborateur.
+          </h2>
+          <p className="text-[11px] text-[#8B9CBB] mt-1">
+            Ajoutez un nouvel utilisateur et configurez ses habilitations.
+          </p>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-rose-500/10 border border-rose-500/50 rounded-lg text-rose-400 text-sm">
+          <div className="mb-4 p-3 bg-rose-500/10 border border-rose-500/50 rounded-lg text-rose-400 text-xs font-medium">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Nom d'utilisateur (Login)</label>
+            <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+              Nom d'utilisateur (Login) *
+            </label>
             <input
               type="text"
               required
               value={formData.username}
               onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+              className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] placeholder-[#4A5878] focus:border-[#3B82F6]/60 transition-all focus:outline-none"
               placeholder="Ex: younes_admin"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Nom Complet</label>
+            <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+              Nom Complet *
+            </label>
             <input
               type="text"
               required
               value={formData.fullName}
               onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+              className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] placeholder-[#4A5878] focus:border-[#3B82F6]/60 transition-all focus:outline-none"
               placeholder="Ex: Younes Admin"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Email</label>
+            <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+              Email *
+            </label>
             <input
               type="email"
               required
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+              className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] placeholder-[#4A5878] focus:border-[#3B82F6]/60 transition-all focus:outline-none"
               placeholder="Ex: younes@najmo.com"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Mot de passe</label>
+            <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+              Mot de passe *
+            </label>
             <input
               type="password"
               required
               minLength={6}
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+              className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] placeholder-[#4A5878] focus:border-[#3B82F6]/60 transition-all focus:outline-none"
               placeholder="Minimum 6 caractères"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Rôle</label>
+            <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+              Rôle *
+            </label>
             <select
               value={formData.role}
               onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+              className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] focus:border-[#3B82F6]/60 transition-all focus:outline-none appearance-none font-sans"
             >
-              <option value="EMPLOYÉ">Employé</option>
-              <option value="COMPTABLE">Comptable</option>
+              <option value="EMPLOYÉ" className="bg-[#080C14]">Employé</option>
+              <option value="COMPTABLE" className="bg-[#080C14]">Comptable</option>
             </select>
           </div>
 
-          <div className="flex justify-end gap-3 mt-8">
+          <div className="flex justify-end gap-3 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition-colors"
+              className="flex-1 py-2.5 bg-transparent hover:bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] text-[#8B9CBB] rounded-xl font-bold text-xs transition-all active:scale-95"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-colors shadow-lg shadow-indigo-500/20 disabled:opacity-50"
+              className="flex-1 py-2.5 bg-[#3B82F6] hover:bg-[#3B82F6]/90 active:scale-95 text-white font-bold text-xs rounded-xl shadow-[0_0_12px_rgba(59,130,246,0.3)] transition-all disabled:opacity-50"
             >
               {loading ? "Création..." : "Créer l'utilisateur"}
             </button>

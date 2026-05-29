@@ -123,23 +123,23 @@ export default function AdsPage() {
   }
 
   return (
-    <div className="w-full space-y-6">
-      <div className="flex flex-col mb-6">
+    <div className="max-w-6xl mx-auto w-full space-y-6">
+      <div className="flex flex-col mb-6 items-center text-center">
         <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
           Gestion Meta Ads
         </h1>
         <p className="text-slate-400 mt-1">Suivi des crédits, dépenses et alertes de solde.</p>
       </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {accounts.map((acc) => (
-            <div key={acc.id} className={`bg-slate-900 rounded-2xl border ${acc.alert ? 'border-rose-500/50 shadow-lg shadow-rose-500/10' : 'border-slate-800'} p-6 transition-all hover:border-slate-700`}>
-              <div className="flex justify-between items-start mb-6">
-                <div className="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
-                  </svg>
-                </div>
+      <div className="flex flex-wrap gap-6 justify-center w-full">
+        {accounts.map((acc) => (
+          <div key={acc.id} className={`w-full max-w-[400px] bg-slate-900 rounded-2xl border ${acc.alert ? 'border-rose-500/50 shadow-lg shadow-rose-500/10' : 'border-slate-800'} p-6 transition-all hover:border-slate-700`}>
+            <div className="flex justify-between items-start mb-6">
+              <div className="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                </svg>
+              </div>
                 {acc.alert && (
                   <span className="px-2 py-1 bg-rose-500/20 text-rose-400 text-[10px] font-bold uppercase tracking-widest rounded-md animate-pulse">
                     Solde Bas

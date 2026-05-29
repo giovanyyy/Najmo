@@ -66,20 +66,33 @@ export default function AccountModal({ isOpen, onClose, account, accessToken, on
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-        <div className="p-6 border-b border-slate-800 flex justify-between items-center">
-          <h2 className="text-xl font-bold text-white">{account ? 'Modifier le Compte' : 'Nouveau Compte'}</h2>
-          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">✕</button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#080C14]/80 backdrop-blur-md p-4">
+      <div className="bg-[#1E2D47] border border-[rgba(255,255,255,0.18)] w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 relative">
+        <button 
+          onClick={onClose} 
+          className="absolute top-6 right-6 text-[#8B9CBB] hover:text-white text-lg font-bold transition-colors"
+        >
+          ✕
+        </button>
+
+        <div className="p-6 pb-2">
+          <h2 className="text-xl font-display font-extrabold text-[#F0F4FF]">
+            {account ? 'Modifier le Compte.' : 'Nouveau Compte.'}
+          </h2>
+          <p className="text-[11px] text-[#8B9CBB] mt-1">
+            {account ? 'Ajustez les informations de ce compte de trésorerie.' : 'Ajoutez un nouveau compte ou coffre pour suivre vos mouvements de fonds.'}
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Nom du Compte *</label>
+            <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+              Nom du Compte *
+            </label>
             <input
               required
               type="text"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white outline-none focus:border-blue-500 transition-colors"
+              className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] placeholder-[#4A5878] focus:border-[#3B82F6]/60 transition-all focus:outline-none"
               placeholder="Ex: CCP Samir, Payoneer NJ..."
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -88,72 +101,78 @@ export default function AccountModal({ isOpen, onClose, account, accessToken, on
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Type</label>
+              <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+                Type
+              </label>
               <select
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white outline-none"
+                className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] focus:border-[#3B82F6]/60 transition-all focus:outline-none appearance-none"
                 value={formData.account_type}
                 onChange={(e) => setFormData({ ...formData, account_type: e.target.value })}
               >
-                <option value="CASH">ESPÈCES</option>
-                <option value="BANK">BANQUE / CCP</option>
-                <option value="PAYONEER">PAYONEER</option>
-                <option value="REDOTPAY">REDOTPAY</option>
-                <option value="PAYPAL">PAYPAL</option>
-                <option value="WISE">WISE</option>
+                <option value="CASH" className="bg-[#080C14]">ESPÈCES</option>
+                <option value="BANK" className="bg-[#080C14]">BANQUE / CCP</option>
+                <option value="PAYONEER" className="bg-[#080C14]">PAYONEER</option>
+                <option value="REDOTPAY" className="bg-[#080C14]">REDOTPAY</option>
+                <option value="PAYPAL" className="bg-[#080C14]">PAYPAL</option>
+                <option value="WISE" className="bg-[#080C14]">WISE</option>
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Devise</label>
+              <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+                Devise
+              </label>
               <select
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white outline-none"
+                className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] focus:border-[#3B82F6]/60 transition-all focus:outline-none appearance-none"
                 value={formData.currency}
                 onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
               >
-                <option value="DZD">DZD</option>
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-                <option value="USDT">USDT</option>
+                <option value="DZD" className="bg-[#080C14]">DZD</option>
+                <option value="USD" className="bg-[#080C14]">USD</option>
+                <option value="EUR" className="bg-[#080C14]">EUR</option>
+                <option value="USDT" className="bg-[#080C14]">USDT</option>
               </select>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase mb-1">Solde Initial *</label>
+            <label className="block text-[10px] font-extrabold uppercase tracking-widest text-[#8B9CBB] mb-1.5 font-sans">
+              Solde Initial *
+            </label>
             <input
               required
               type="number"
               step="0.01"
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white outline-none focus:border-blue-500 transition-colors"
+              className="w-full bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-[#F0F4FF] placeholder-[#4A5878] focus:border-[#3B82F6]/60 transition-all focus:outline-none"
               placeholder="0.00"
               value={formData.initial_balance}
               onChange={(e) => setFormData({ ...formData, initial_balance: e.target.value })}
             />
-            <p className="text-[10px] text-slate-500 mt-1">C'est le montant présent sur le compte au moment de sa création.</p>
+            <p className="text-[9px] text-[#8B9CBB] mt-1.5 leading-relaxed">C'est le montant présent sur le compte au moment de sa création.</p>
           </div>
 
-          <div className="flex items-center gap-2 pt-2">
+          <div className="flex items-center gap-2.5 pt-2">
             <input
               type="checkbox"
               id="is_active"
               checked={formData.is_active}
               onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
-              className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-blue-600 focus:ring-blue-500"
+              className="w-4 h-4 rounded border-[rgba(255,255,255,0.08)] bg-[#080C14] text-[#3B82F6] focus:ring-[#3B82F6]/50"
             />
-            <label htmlFor="is_active" className="text-sm text-slate-300">Compte actif</label>
+            <label htmlFor="is_active" className="text-xs text-[#8B9CBB] select-none cursor-pointer">Compte actif</label>
           </div>
 
           <div className="flex gap-3 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 bg-slate-800 text-slate-300 rounded-lg font-medium hover:bg-slate-700 transition-colors"
+              className="flex-1 py-2.5 bg-transparent hover:bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] text-[#8B9CBB] rounded-xl font-bold text-xs transition-all active:scale-95"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium shadow-lg shadow-blue-900/20 hover:bg-blue-500 transition-colors disabled:opacity-50"
+              className="flex-1 py-2.5 bg-[#3B82F6] hover:bg-[#3B82F6]/90 active:scale-95 text-white font-bold text-xs rounded-xl shadow-[0_0_12px_rgba(59,130,246,0.3)] transition-all disabled:opacity-50"
             >
               {loading ? "Chargement..." : account ? "Enregistrer" : "Créer le Compte"}
             </button>

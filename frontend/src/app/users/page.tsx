@@ -66,40 +66,53 @@ export default function UsersPage() {
 
 
   const userRoles = ((session?.user as any)?.roles || []).map((r: string) => r.toUpperCase());
-  const isAdmin = userRoles.some((r: string) => ['ADMIN', 'ADMINISTRATEUR'].includes(r));
-
-  if (!isAdmin) {
+  const isAdmin = userRoles.some((r: string) => ['ADMIN', 'ADMINISTRATEUR'].includes(r));  if (!isAdmin) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-        <h1 className="text-3xl font-bold text-rose-400 mb-4">Accès Refusé</h1>
-        <p className="text-slate-400">Seul l'administrateur peut accéder à cette page.</p>
-        <a href="/" className="mt-8 px-6 py-2 bg-slate-800 hover:bg-slate-700 rounded-full text-slate-200 transition-colors">
-          Retour au tableau de bord
-        </a>
+      <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#080C14] min-h-[60vh]">
+        <div className="bg-[#1E2D47] border border-[rgba(255,255,255,0.1)] rounded-2xl p-8 max-w-md shadow-2xl">
+          <div className="w-16 h-16 bg-[#EF4444]/10 text-[#EF4444] rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-[#EF4444]/20 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+            ⚠️
+          </div>
+          <h1 className="text-xl font-display font-extrabold text-[#F0F4FF] mb-2">Accès Refusé.</h1>
+          <p className="text-xs text-[#8B9CBB] leading-relaxed">
+            Seuls les administrateurs disposent des privilèges requis pour accéder à la console de gestion des collaborateurs.
+          </p>
+          <a 
+            href="/" 
+            className="mt-6 inline-block w-full py-2.5 bg-transparent hover:bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] text-[#8B9CBB] rounded-xl font-bold text-xs transition-all active:scale-95"
+          >
+            Retour au tableau de bord
+          </a>
+        </div>
       </div>
     );
   }
 
   return (
-    <main className="flex-1 p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+    <main className="flex-1 p-8 space-y-6">
+      <div className="max-w-6xl mx-auto space-y-6">
+        
+        <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-slate-100">Gestion des Utilisateurs</h1>
-            <p className="text-slate-400 mt-1">Gérez les accès employés et comptables</p>
+            <h1 className="text-3xl font-display font-extrabold tracking-tight text-[#F0F4FF]">
+              Gestion des Utilisateurs.
+            </h1>
+            <p className="text-xs text-[#8B9CBB] mt-1 font-medium">
+              Gérez les accès, rôles et habilitations des employés et comptables de votre ERP.
+            </p>
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-colors shadow-lg shadow-indigo-500/20 flex items-center gap-2"
+            className="px-4 py-2 bg-[#3B82F6] hover:bg-[#3B82F6]/90 active:scale-95 text-white font-bold text-xs rounded-xl shadow-[0_0_12px_rgba(59,130,246,0.3)] transition-all flex items-center gap-1.5"
           >
             <span>+</span> Ajouter un utilisateur
           </button>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+        <div className="bg-[#141E2E] border border-[rgba(255,255,255,0.1)] rounded-xl overflow-hidden shadow-2xl">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-300">
-              <thead className="bg-slate-800/50 text-xs uppercase text-slate-400 font-semibold">
+            <table className="w-full text-left text-xs text-[#F0F4FF]">
+              <thead className="bg-[#1A2540] border-b border-[rgba(255,255,255,0.06)] text-[10px] uppercase text-[#8B9CBB] font-extrabold tracking-widest">
                 <tr>
                   <th className="px-6 py-4">Nom Complet</th>
                   <th className="px-6 py-4">Email</th>
@@ -109,29 +122,29 @@ export default function UsersPage() {
                   <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/50">
+              <tbody className="divide-y divide-[rgba(255,255,255,0.04)] bg-[#141E2E]">
                 {loading ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
-                      Chargement des utilisateurs...
+                    <td colSpan={6} className="px-6 py-8 text-center text-[#8B9CBB] font-medium">
+                      Chargement des collaborateurs...
                     </td>
                   </tr>
                 ) : users.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
-                      Aucun utilisateur trouvé.
+                    <td colSpan={6} className="px-6 py-8 text-center text-[#8B9CBB] font-medium">
+                      Aucun collaborateur enregistré pour le moment.
                     </td>
                   </tr>
                 ) : (
                   users.map((user) => (
-                    <tr key={user.id} className="hover:bg-slate-800/20 transition-colors">
-                      <td className="px-6 py-4 font-medium text-slate-200">{user.full_name}</td>
-                      <td className="px-6 py-4">{user.email}</td>
+                    <tr key={user.id} className="hover:bg-[#1A2540]/30 transition-colors">
+                      <td className="px-6 py-4 font-bold text-[#F0F4FF]">{user.full_name}</td>
+                      <td className="px-6 py-4 text-[#8B9CBB] font-mono">{user.email}</td>
                       <td className="px-6 py-4">
-                        <span className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${
-                          user.role === 'Administrateur' 
+                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold tracking-wider uppercase border ${
+                          user.role === 'Administrateur' || user.role === 'ADMINISTRATEUR' || user.role === 'ADMIN'
                             ? 'bg-purple-500/10 text-purple-400 border-purple-500/20'
-                            : user.role === 'Comptable'
+                            : user.role === 'Comptable' || user.role === 'COMPTABLE'
                             ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
                             : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
                         }`}>
@@ -140,26 +153,30 @@ export default function UsersPage() {
                       </td>
                       <td className="px-6 py-4">
                         {user.is_active ? (
-                          <span className="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-xs font-medium border border-emerald-500/20">
+                          <span className="px-2.5 py-1 bg-[#10B981]/10 text-[#10B981] rounded-full text-[10px] font-extrabold uppercase tracking-wider border border-[#10B981]/20">
                             Actif
                           </span>
                         ) : (
-                          <span className="px-2.5 py-1 bg-rose-500/10 text-rose-400 rounded-full text-xs font-medium border border-rose-500/20">
+                          <span className="px-2.5 py-1 bg-[#EF4444]/10 text-[#EF4444] rounded-full text-[10px] font-extrabold uppercase tracking-wider border border-[#EF4444]/20">
                             Inactif
                           </span>
                         )}
                       </td>
-                      <td className="px-6 py-4 text-slate-400">
-                        {new Date(user.created_at).toLocaleDateString("fr-FR")}
+                      <td className="px-6 py-4 text-[#8B9CBB]">
+                        {new Date(user.created_at).toLocaleDateString("fr-FR", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric"
+                        })}
                       </td>
                       <td className="px-6 py-4 text-right">
                         <button
                           onClick={() => handleDeleteUser(userIdToIdString(user.id), user.full_name)}
-                          className="p-2 text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 rounded-lg transition-colors"
+                          className="p-1.5 text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 rounded-lg transition-colors inline-flex items-center justify-center"
                           title="Supprimer l'utilisateur"
                         >
-                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                           </svg>
                         </button>
                       </td>
