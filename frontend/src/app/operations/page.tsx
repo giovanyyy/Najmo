@@ -272,7 +272,7 @@ export default function OperationsPage() {
         <div className="hidden print:block mb-8">
           <div className="flex justify-between items-end border-b-2 border-slate-300 pb-4">
             <div>
-              <h1 className="text-3xl font-black text-slate-900 tracking-tight">NAJMO<span className="text-blue-600">.</span></h1>
+              <h1 className="text-3xl font-black text-slate-900 tracking-tight">NAJMO</h1>
               <p className="text-sm font-semibold uppercase tracking-widest text-slate-400 mt-1">Rapport d'Activité Financière</p>
             </div>
             <div className="text-right text-xs text-slate-500 font-mono">

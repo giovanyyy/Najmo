@@ -94,7 +94,7 @@ export default function InvoicePrintPage() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-2xl font-extrabold tracking-tight text-slate-900">
-                  NAJMO<span className="text-blue-600">.</span>
+                  NAJMO
                 </span>
                 <span className="text-[9px] uppercase font-extrabold tracking-widest bg-slate-100 text-slate-600 px-2 py-0.5 rounded">
                   Software & FinTech

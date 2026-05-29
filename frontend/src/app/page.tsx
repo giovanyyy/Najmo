@@ -440,7 +440,7 @@ export default function Home() {
               </div>
               {isSidebarExpanded && (
                 <span className="font-display font-extrabold text-sm tracking-tight text-[#F0F4FF] whitespace-nowrap">
-                  FinGest<span className="text-[#3B82F6]">.</span>Pro
+                  FinGestPro
                 </span>
               )}
             </div>
