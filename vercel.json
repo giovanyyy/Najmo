@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "backend/**/*": {
-      "includeFiles": "node_modules/passport-jwt/**/*"
-    }
-  },
   "experimentalServices": {
     "frontend": {
       "entrypoint": "frontend",
