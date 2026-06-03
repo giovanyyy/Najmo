@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import * as passport from 'passport';
-import * as passportJwt from 'passport-jwt';
+import * as passportJwt from './passport-jwt/lib';
 // Prevent dead code elimination
 const forceInclude = { passport, passportJwt };
 import { ConfigModule } from '@nestjs/config';
