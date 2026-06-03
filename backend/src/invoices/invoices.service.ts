@@ -4,7 +4,6 @@ import { SettingsService } from '../settings/settings.service';
 import { AuditService } from '../lib/audit';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as puppeteer from 'puppeteer';
 
 @Injectable()
 export class InvoicesService {
@@ -293,7 +292,7 @@ export class InvoicesService {
       </html>
     `;
 
-    const browser = await puppeteer.launch({
+    const browser = await (require('puppeteer')).launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
