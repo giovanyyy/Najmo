@@ -2,7 +2,7 @@ import { Controller, Post, Body, Request, UseGuards, Get, Param } from '@nestjs/
 import { PaymentsService } from './payments.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PermissionsGuard, Permissions } from '../auth/guards/permissions.guard';
-import { payments_currency, payments_payment_method } from '@prisma/client';
+import { payments_currency, payments_payment_method } from '../prisma/client';
 
 @Controller('payments')
 @UseGuards(JwtAuthGuard, PermissionsGuard)
