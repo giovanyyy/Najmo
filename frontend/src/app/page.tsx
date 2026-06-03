@@ -620,7 +620,10 @@ export default function Home() {
           {/* Logout Button */}
           {isSidebarExpanded ? (
             <button
-              onClick={() => signOut({ callbackUrl: "/" })}
+              onClick={async () => {
+                await signOut({ redirect: false });
+                window.location.href = "/login";
+              }}
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold text-[#EF4444] bg-[#EF4444]/5 hover:bg-[#EF4444]/15 border border-[#EF4444]/15 hover:border-[#EF4444]/30 transition-all duration-200 active:scale-[0.97]"
             >
               <span className="text-sm">🚪</span>
@@ -628,7 +631,10 @@ export default function Home() {
             </button>
           ) : (
             <button
-              onClick={() => signOut({ callbackUrl: "/" })}
+              onClick={async () => {
+                await signOut({ redirect: false });
+                window.location.href = "/login";
+              }}
               title="Déconnexion"
               className="w-10 h-10 mx-auto flex items-center justify-center rounded-xl text-sm text-[#EF4444] bg-[#EF4444]/5 hover:bg-[#EF4444]/15 border border-[#EF4444]/15 hover:border-[#EF4444]/30 transition-all duration-200 active:scale-[0.97]"
             >
