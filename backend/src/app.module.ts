@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
-import * as passport from 'passport';
-import * as passportJwt from './passport-jwt/lib';
-// Prevent dead code elimination
-const forceInclude = { passport, passportJwt };
+import 'passport';
+import 'passport-jwt';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { PrismaModule } from './prisma/prisma.module';

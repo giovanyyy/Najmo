@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 const { PassportStrategy } = require('@nestjs/passport');
 // @ts-ignore
-import { ExtractJwt, Strategy } from '../../passport-jwt/lib';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../../prisma/prisma.service';
 
