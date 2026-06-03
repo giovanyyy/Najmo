@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -17,12 +17,12 @@ model account_movements {
   balance_before Decimal?                        @db.Decimal(18, 2)
   balance_after  Decimal?                        @db.Decimal(18, 2)
   description    String?                         @db.Text
-  created_at     DateTime                        @default(now()) @db.Timestamp(0)
-  accounts       accounts                        @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_movements_account")
-  operations     operations                      @relation(fields: [operation_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_movements_operation")
+  created_at     DateTime                        @default(now()) 
+  accounts       accounts                        @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  operations     operations                      @relation(fields: [operation_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@index([operation_id], map: "fk_movements_operation")
-  @@index([account_id], map: "idx_movements_account")
+  @@index([operation_id])
+  @@index([account_id])
 }
 
 model accounts {
@@ -36,9 +36,9 @@ model accounts {
   account_number                                                         String?                         @db.VarChar(190)
   description                                                            String?                         @db.Text
   is_active                                                              Boolean?                        @default(true)
-  created_at                                                             DateTime                        @default(now()) @db.Timestamp(0)
-  updated_at                                                             DateTime                        @default(now()) @db.Timestamp(0)
-  deleted_at                                                             DateTime?                       @db.DateTime(0)
+  created_at                                                             DateTime                        @default(now()) 
+  updated_at                                                             DateTime                        @default(now()) 
+  deleted_at                                                             DateTime?                       
   account_movements                                                      account_movements[]
   expenses                                                               expenses[]
   internal_transfers_internal_transfers_destination_account_idToaccounts internal_transfers[]            @relation("internal_transfers_destination_account_idToaccounts")
@@ -49,7 +49,7 @@ model accounts {
   product_account_compatibility                                          product_account_compatibility[]
   user_accounts                                                          user_accounts[]
 
-  @@index([currency], map: "idx_accounts_currency")
+  @@index([currency])
 }
 
 model audit_logs {
@@ -58,15 +58,15 @@ model audit_logs {
   action      String   @db.VarChar(190)
   entity_type String   @db.VarChar(190)
   entity_id   BigInt?
-  old_values  String?  @db.LongText
-  new_values  String?  @db.LongText
+  old_values  String?  @db.Text
+  new_values  String?  @db.Text
   ip_address  String?  @db.VarChar(100)
   user_agent  String?  @db.Text
-  created_at  DateTime @default(now()) @db.Timestamp(0)
-  users       users?   @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "fk_audit_user")
+  created_at  DateTime @default(now()) 
+  users       users?   @relation(fields: [user_id], references: [id], onUpdate: NoAction)
 
-  @@index([user_id], map: "fk_audit_user")
-  @@index([entity_type, entity_id], map: "idx_audit_entity")
+  @@index([user_id])
+  @@index([entity_type, entity_id])
 }
 
 model clients {
@@ -82,9 +82,9 @@ model clients {
   notes            String?              @db.Text
   total_operations Int?                 @default(0)
   total_profit     Decimal?             @default(0.00) @db.Decimal(18, 2)
-  created_at       DateTime             @default(now()) @db.Timestamp(0)
-  updated_at       DateTime             @default(now()) @db.Timestamp(0)
-  deleted_at       DateTime?            @db.DateTime(0)
+  created_at       DateTime             @default(now()) 
+  updated_at       DateTime             @default(now()) 
+  deleted_at       DateTime?            
   invoices         invoices[]
   operations       operations[]
 }
@@ -95,10 +95,10 @@ model exchange_rates {
   target_currency    exchange_rates_target_currency
   rate               Decimal                        @db.Decimal(18, 6)
   created_by_user_id BigInt?
-  created_at         DateTime                       @default(now()) @db.Timestamp(0)
-  users              users?                         @relation(fields: [created_by_user_id], references: [id], onUpdate: NoAction, map: "fk_exchange_rate_user")
+  created_at         DateTime                       @default(now()) 
+  users              users?                         @relation(fields: [created_by_user_id], references: [id], onUpdate: NoAction)
 
-  @@index([created_by_user_id], map: "fk_exchange_rate_user")
+  @@index([created_by_user_id])
 }
 
 model expenses {
@@ -108,16 +108,16 @@ model expenses {
   amount             Decimal           @db.Decimal(18, 2)
   currency           expenses_currency
   description        String?           @db.Text
-  expense_date       DateTime          @db.DateTime(0)
+  expense_date       DateTime          
   receipt_file       String?           @db.VarChar(255)
   created_by_user_id BigInt
-  created_at         DateTime          @default(now()) @db.Timestamp(0)
-  deleted_at         DateTime?         @db.DateTime(0)
-  accounts           accounts          @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_expenses_account")
-  users              users             @relation(fields: [created_by_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_expenses_user")
+  created_at         DateTime          @default(now()) 
+  deleted_at         DateTime?         
+  accounts           accounts          @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users              users             @relation(fields: [created_by_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@index([account_id], map: "fk_expenses_account")
-  @@index([created_by_user_id], map: "fk_expenses_user")
+  @@index([account_id])
+  @@index([created_by_user_id])
 }
 
 model internal_transfers {
@@ -128,21 +128,21 @@ model internal_transfers {
   destination_amount                                           Decimal  @db.Decimal(18, 2)
   exchange_rate                                                Decimal? @db.Decimal(18, 6)
   notes                                                        String?  @db.Text
-  transfer_date                                                DateTime @db.DateTime(0)
+  transfer_date                                                DateTime 
   created_by_user_id                                           BigInt
-  created_at                                                   DateTime @default(now()) @db.Timestamp(0)
-  accounts_internal_transfers_destination_account_idToaccounts accounts @relation("internal_transfers_destination_account_idToaccounts", fields: [destination_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_transfer_destination_account")
-  accounts_internal_transfers_source_account_idToaccounts      accounts @relation("internal_transfers_source_account_idToaccounts", fields: [source_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_transfer_source_account")
-  users                                                        users    @relation(fields: [created_by_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_transfer_user")
+  created_at                                                   DateTime @default(now()) 
+  accounts_internal_transfers_destination_account_idToaccounts accounts @relation("internal_transfers_destination_account_idToaccounts", fields: [destination_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  accounts_internal_transfers_source_account_idToaccounts      accounts @relation("internal_transfers_source_account_idToaccounts", fields: [source_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users                                                        users    @relation(fields: [created_by_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@index([destination_account_id], map: "fk_transfer_destination_account")
-  @@index([source_account_id], map: "fk_transfer_source_account")
-  @@index([created_by_user_id], map: "fk_transfer_user")
+  @@index([destination_account_id])
+  @@index([source_account_id])
+  @@index([created_by_user_id])
 }
 
 model invoices {
   id               BigInt                   @id @default(autoincrement())
-  invoice_number   String                   @unique(map: "invoice_number") @db.VarChar(100)
+  invoice_number   String                   @unique() @db.VarChar(100)
   client_id        BigInt
   total_amount     Decimal                  @db.Decimal(18, 2)
   paid_amount      Decimal?                 @default(0.00) @db.Decimal(18, 2)
@@ -152,17 +152,17 @@ model invoices {
   payment_method   payments_payment_method?
   due_date         DateTime?                @db.Date
   notes            String?                  @db.Text
-  created_at       DateTime                 @default(now()) @db.Timestamp(0)
-  updated_at       DateTime                 @default(now()) @db.Timestamp(0)
-  deleted_at       DateTime?                @db.DateTime(0)
-  sent_at          DateTime?                @db.DateTime(0)
-  clients          clients                  @relation(fields: [client_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_invoices_client")
+  created_at       DateTime                 @default(now()) 
+  updated_at       DateTime                 @default(now()) 
+  deleted_at       DateTime?                
+  sent_at          DateTime?                
+  clients          clients                  @relation(fields: [client_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   operations       operations[]
   payments         payments[]
   invoice_items    invoice_items[]
 
-  @@index([client_id], map: "fk_invoices_client")
-  @@index([status], map: "idx_invoices_status")
+  @@index([client_id])
+  @@index([status])
 }
 
 model invoice_items {
@@ -173,12 +173,12 @@ model invoice_items {
   quantity     Decimal    @db.Decimal(18, 2)
   unit_price   Decimal    @db.Decimal(18, 2)
   total        Decimal    @db.Decimal(18, 2)
-  created_at   DateTime   @default(now()) @db.Timestamp(0)
-  invoices     invoices   @relation(fields: [invoice_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_invoice_items_invoice")
-  operations   operations @relation(fields: [operation_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_invoice_items_operation")
+  created_at   DateTime   @default(now()) 
+  invoices     invoices   @relation(fields: [invoice_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  operations   operations @relation(fields: [operation_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@index([invoice_id], map: "fk_invoice_items_invoice")
-  @@index([operation_id], map: "fk_invoice_items_operation")
+  @@index([invoice_id])
+  @@index([operation_id])
 }
 
 model operations {
@@ -199,31 +199,31 @@ model operations {
   status                                               operations_status?           @default(COMPLETED)
   notes                                                String?                      @db.Text
   attachment_url                                       String?                      @db.Text
-  operation_date                                       DateTime                     @db.DateTime(0)
-  created_at                                           DateTime                     @default(now()) @db.Timestamp(0)
-  updated_at                                           DateTime                     @default(now()) @db.Timestamp(0)
-  deleted_at                                           DateTime?                    @db.DateTime(0)
+  operation_date                                       DateTime                     
+  created_at                                           DateTime                     @default(now()) 
+  updated_at                                           DateTime                     @default(now()) 
+  deleted_at                                           DateTime?                    
   invoice_id                                           BigInt?
   invoiced                                             Boolean                      @default(false)
   account_movements                                    account_movements[]
-  invoices                                             invoices?                    @relation(fields: [invoice_id], references: [id], onUpdate: NoAction, map: "fk_operations_invoice")
-  clients                                              clients?                     @relation(fields: [client_id], references: [id], onUpdate: NoAction, map: "fk_operations_client")
-  users_operations_created_by_user_idTousers           users                        @relation("operations_created_by_user_idTousers", fields: [created_by_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_operations_created_by")
-  accounts_operations_destination_account_idToaccounts accounts?                    @relation("operations_destination_account_idToaccounts", fields: [destination_account_id], references: [id], onUpdate: NoAction, map: "fk_operations_destination_account")
-  products                                             products                     @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_operations_product")
-  accounts_operations_source_account_idToaccounts      accounts?                    @relation("operations_source_account_idToaccounts", fields: [source_account_id], references: [id], onUpdate: NoAction, map: "fk_operations_source_account")
-  users_operations_validated_by_user_idTousers         users?                       @relation("operations_validated_by_user_idTousers", fields: [validated_by_user_id], references: [id], onUpdate: NoAction, map: "fk_operations_validated_by")
+  invoices                                             invoices?                    @relation(fields: [invoice_id], references: [id], onUpdate: NoAction)
+  clients                                              clients?                     @relation(fields: [client_id], references: [id], onUpdate: NoAction)
+  users_operations_created_by_user_idTousers           users                        @relation("operations_created_by_user_idTousers", fields: [created_by_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  accounts_operations_destination_account_idToaccounts accounts?                    @relation("operations_destination_account_idToaccounts", fields: [destination_account_id], references: [id], onUpdate: NoAction)
+  products                                             products                     @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  accounts_operations_source_account_idToaccounts      accounts?                    @relation("operations_source_account_idToaccounts", fields: [source_account_id], references: [id], onUpdate: NoAction)
+  users_operations_validated_by_user_idTousers         users?                       @relation("operations_validated_by_user_idTousers", fields: [validated_by_user_id], references: [id], onUpdate: NoAction)
   operation_files                                      operation_files[]
   invoice_items                                        invoice_items[]
 
-  @@index([created_by_user_id], map: "fk_operations_created_by")
-  @@index([destination_account_id], map: "fk_operations_destination_account")
-  @@index([product_id], map: "fk_operations_product")
-  @@index([source_account_id], map: "fk_operations_source_account")
-  @@index([validated_by_user_id], map: "fk_operations_validated_by")
-  @@index([client_id], map: "idx_operations_client")
-  @@index([operation_date], map: "idx_operations_date")
-  @@index([invoice_id], map: "fk_operations_invoice")
+  @@index([created_by_user_id])
+  @@index([destination_account_id])
+  @@index([product_id])
+  @@index([source_account_id])
+  @@index([validated_by_user_id])
+  @@index([client_id])
+  @@index([operation_date])
+  @@index([invoice_id])
 }
 
 model operation_files {
@@ -233,10 +233,10 @@ model operation_files {
   path         String     @db.Text
   mime_type    String     @db.VarChar(100)
   size         Int
-  created_at   DateTime   @default(now()) @db.Timestamp(0)
-  operations   operations @relation(fields: [operation_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_operation_files_operation")
+  created_at   DateTime   @default(now()) 
+  operations   operations @relation(fields: [operation_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@index([operation_id], map: "fk_operation_files_operation")
+  @@index([operation_id])
 }
 
 model payments {
@@ -248,18 +248,18 @@ model payments {
   payment_method     payments_payment_method
   reference_number   String?                 @db.VarChar(190)
   notes              String?                 @db.Text
-  payment_date       DateTime                @db.DateTime(0)
+  payment_date       DateTime                
   created_by_user_id BigInt
-  created_at         DateTime                @default(now()) @db.Timestamp(0)
-  deleted_at         DateTime?               @db.DateTime(0)
-  accounts           accounts                @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_payments_account")
-  users              users                   @relation(fields: [created_by_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_payments_created_by")
-  invoices           invoices                @relation(fields: [invoice_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_payments_invoice")
+  created_at         DateTime                @default(now()) 
+  deleted_at         DateTime?               
+  accounts           accounts                @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users              users                   @relation(fields: [created_by_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  invoices           invoices                @relation(fields: [invoice_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@index([account_id], map: "fk_payments_account")
-  @@index([created_by_user_id], map: "fk_payments_created_by")
-  @@index([invoice_id], map: "fk_payments_invoice")
-  @@index([payment_date], map: "idx_payments_date")
+  @@index([account_id])
+  @@index([created_by_user_id])
+  @@index([invoice_id])
+  @@index([payment_date])
 }
 
 model product_account_compatibility {
@@ -267,24 +267,24 @@ model product_account_compatibility {
   product_id         BigInt
   account_id         BigInt
   compatibility_type product_compatibility_type @default(BOTH)
-  created_at         DateTime                   @default(now()) @db.Timestamp(0)
-  accounts           accounts                   @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_product_compatibility_account")
-  products           products                   @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_product_compatibility_product")
+  created_at         DateTime                   @default(now()) 
+  accounts           accounts                   @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  products           products                   @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@index([account_id], map: "fk_product_compatibility_account")
-  @@index([product_id], map: "fk_product_compatibility_product")
+  @@index([account_id])
+  @@index([product_id])
 }
 
 model products {
   id                            BigInt                          @id @default(autoincrement())
-  name                          String                          @unique(map: "name") @db.VarChar(190)
+  name                          String                          @unique() @db.VarChar(190)
   category                      products_category
   description                   String?                         @db.Text
   buy_price                     Decimal                         @default(0.00) @db.Decimal(18, 2)
   sell_price                    Decimal                         @default(0.00) @db.Decimal(18, 2)
   is_active                     Boolean?                        @default(true)
-  created_at                    DateTime                        @default(now()) @db.Timestamp(0)
-  deleted_at                    DateTime?                       @db.DateTime(0)
+  created_at                    DateTime                        @default(now()) 
+  deleted_at                    DateTime?                       
   operations                    operations[]
   product_account_compatibility product_account_compatibility[]
 }
@@ -294,29 +294,29 @@ model user_accounts {
   user_id          BigInt
   account_id       BigInt
   permission_level user_accounts_permission_level? @default(VIEWER)
-  created_at       DateTime                        @default(now()) @db.Timestamp(0)
-  accounts         accounts                        @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user_accounts_account")
-  users            users                           @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user_accounts_user")
+  created_at       DateTime                        @default(now()) 
+  accounts         accounts                        @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users            users                           @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@index([account_id], map: "fk_user_accounts_account")
-  @@index([user_id], map: "fk_user_accounts_user")
+  @@index([account_id])
+  @@index([user_id])
 }
 
 model users {
   id                                                BigInt               @id @default(autoincrement())
-  keycloak_user_id                                  String?              @unique(map: "keycloak_user_id") @db.VarChar(190)
+  keycloak_user_id                                  String?              @unique() @db.VarChar(190)
   local_password                                    String?              @db.VarChar(255)
   role                                              String               @default("EMPLOYEE") @db.VarChar(50)
   force_password_change                             Boolean              @default(false)
   login_attempts                                    Int                  @default(0)
-  locked_until                                      DateTime?            @db.DateTime(0)
-  last_login                                        DateTime?            @db.DateTime(0)
+  locked_until                                      DateTime?            
+  last_login                                        DateTime?            
   full_name                                         String               @db.VarChar(190)
-  email                                             String               @unique(map: "email") @db.VarChar(190)
+  email                                             String               @unique() @db.VarChar(190)
   phone                                             String?              @db.VarChar(30)
   is_active                                         Boolean?             @default(true)
-  created_at                                        DateTime             @default(now()) @db.Timestamp(0)
-  updated_at                                        DateTime             @default(now()) @db.Timestamp(0)
+  created_at                                        DateTime             @default(now()) 
+  updated_at                                        DateTime             @default(now()) 
   audit_logs                                        audit_logs[]
   exchange_rates                                    exchange_rates[]
   expenses                                          expenses[]
@@ -328,7 +328,7 @@ model users {
   alert_dismissals                                  alert_dismissals[]
   settings                                          settings[]
 
-  @@index([email], map: "idx_users_email")
+  @@index([email])
 }
 
 model meta_ads_accounts {
@@ -339,8 +339,8 @@ model meta_ads_accounts {
   currency            String                @db.VarChar(10)
   due_date            DateTime              @db.Date
   is_active           Boolean               @default(true)
-  created_at          DateTime              @default(now()) @db.Timestamp(0)
-  updated_at          DateTime              @default(now()) @db.Timestamp(0)
+  created_at          DateTime              @default(now()) 
+  updated_at          DateTime              @default(now()) 
   meta_ads_deductions meta_ads_deductions[]
 }
 
@@ -348,13 +348,13 @@ model meta_ads_deductions {
   id                BigInt            @id @default(autoincrement())
   account_id        BigInt
   amount            Decimal           @db.Decimal(18, 2)
-  deduction_date    DateTime          @db.DateTime(0)
+  deduction_date    DateTime          
   description       String?           @db.Text
   invoice_ref       String?           @db.VarChar(190)
-  created_at        DateTime          @default(now()) @db.Timestamp(0)
-  meta_ads_accounts meta_ads_accounts @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_deductions_account")
+  created_at        DateTime          @default(now()) 
+  meta_ads_accounts meta_ads_accounts @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@index([account_id], map: "fk_deductions_account")
+  @@index([account_id])
 }
 
 model alerts {
@@ -365,8 +365,8 @@ model alerts {
   entity_type      String?            @db.VarChar(100)
   entity_id        BigInt?
   is_resolved      Boolean            @default(false)
-  resolved_at      DateTime?          @db.DateTime(0)
-  created_at       DateTime           @default(now()) @db.Timestamp(0)
+  resolved_at      DateTime?          
+  created_at       DateTime           @default(now()) 
   alert_dismissals alert_dismissals[]
 }
 
@@ -374,23 +374,23 @@ model alert_dismissals {
   id           BigInt   @id @default(autoincrement())
   alert_id     BigInt
   user_id      BigInt
-  dismissed_at DateTime @default(now()) @db.Timestamp(0)
-  alerts       alerts   @relation(fields: [alert_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_dismissals_alert")
-  users        users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_dismissals_user")
+  dismissed_at DateTime @default(now()) 
+  alerts       alerts   @relation(fields: [alert_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users        users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@index([alert_id], map: "fk_dismissals_alert")
-  @@index([user_id], map: "fk_dismissals_user")
+  @@index([alert_id])
+  @@index([user_id])
 }
 
 model settings {
   id                 BigInt   @id @default(autoincrement())
-  key_name           String   @unique(map: "key_name") @db.VarChar(190)
-  value_data         String?  @db.LongText
+  key_name           String   @unique() @db.VarChar(190)
+  value_data         String?  @db.Text
   updated_by_user_id BigInt?
-  updated_at         DateTime @default(now()) @db.Timestamp(0)
-  users              users?   @relation(fields: [updated_by_user_id], references: [id], onUpdate: NoAction, map: "fk_settings_user")
+  updated_at         DateTime @default(now()) 
+  users              users?   @relation(fields: [updated_by_user_id], references: [id], onUpdate: NoAction)
 
-  @@index([updated_by_user_id], map: "fk_settings_user")
+  @@index([updated_by_user_id])
 }
 
 enum product_compatibility_type {
