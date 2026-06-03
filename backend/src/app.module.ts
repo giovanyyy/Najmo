@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+console.log(require('passport-jwt'));
+console.log(require('passport'));
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { PrismaModule } from './prisma/prisma.module';
