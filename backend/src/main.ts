@@ -1,6 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-console.log(require('passport'));
-console.log(require('passport-jwt'));
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
