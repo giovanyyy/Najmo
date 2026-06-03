@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AuditService } from '../lib/audit';
-import { payments_currency, payments_payment_method } from '../prisma/client';
+import { payments_currency, payments_payment_method } from '@prisma/client';
 
 @Injectable()
 export class PaymentsService {
