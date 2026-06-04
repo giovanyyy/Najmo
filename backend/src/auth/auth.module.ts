@@ -1,15 +1,13 @@
-import { Module } from '@nestjs/common';
-import { PassportModule } from '@nestjs/passport';
+import { Global, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './strategies/jwt.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PrismaModule } from '../prisma/prisma.module';
 import { LocalAuthService } from './local-auth.service';
 import { LocalAuthController } from './local-auth.controller';
 
+@Global()
 @Module({
   imports: [
-    PassportModule.register({ defaultStrategy: 'jwt' }),
     ConfigModule,
     PrismaModule,
     JwtModule.registerAsync({
@@ -21,9 +19,9 @@ import { LocalAuthController } from './local-auth.controller';
       inject: [ConfigService],
     }),
   ],
-  providers: [JwtStrategy, LocalAuthService],
+  providers: [LocalAuthService],
   controllers: [LocalAuthController],
-  exports: [PassportModule, JwtStrategy, LocalAuthService],
+  exports: [LocalAuthService, JwtModule],
 })
 export class AuthModule {}
 
