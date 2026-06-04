@@ -217,7 +217,7 @@ export default function Home() {
       if ((session as any)?.accessToken) {
         headers["Authorization"] = `Bearer ${(session as any).accessToken}`;
       }
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
 
       // 1. Fetch Clients
       const clientsRes = await fetch(`${apiBase}/clients`, { headers });
@@ -341,7 +341,7 @@ export default function Home() {
     }
 
     const amountNum = Number(newOpAmount);
-    const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+    const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
 
     try {
       const res = await fetch(`${apiBase}/operations`, {
