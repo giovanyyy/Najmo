@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("farouk@gmail.com");
-  const [password, setPassword] = useState("farouk33");
+  const [email, setEmail] = useState("najmo@gmail.com");
+  const [password, setPassword] = useState("najmo33");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [setupDone, setSetupDone] = useState(false);
@@ -48,7 +48,7 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        setError("Email ou mot de passe incorrect. Essayez : farouk@gmail.com / farouk33");
+        setError("Email ou mot de passe incorrect. Essayez : najmo@gmail.com / najmo33");
       } else if (result?.ok) {
         router.push("/");
         router.refresh();
@@ -132,8 +132,8 @@ export default function LoginPage() {
         {/* Credentials hint */}
         <div className="mt-4 p-4 bg-[#080C14] border border-[rgba(255,255,255,0.06)] rounded-xl text-xs text-[#4A5878]">
           <p className="font-bold text-[#8B9CBB] mb-1">🔑 Accès par défaut :</p>
-          <p>Email : <span className="text-[#3B82F6] font-mono">farouk@gmail.com</span></p>
-          <p>Mot de passe : <span className="text-[#3B82F6] font-mono">farouk33</span></p>
+          <p>Email : <span className="text-[#3B82F6] font-mono">najmo@gmail.com</span></p>
+          <p>Mot de passe : <span className="text-[#3B82F6] font-mono">najmo33</span></p>
         </div>
       </div>
     </div>

@@ -43,7 +43,7 @@ export class LocalAuthService {
       isValid = await bcrypt.compare(password, user.local_password);
     } else {
       // Default initial admin login if no local_password set
-      if (email === 'farouk@gmail.com' && password === 'farouk33') {
+      if (email === 'najmo@gmail.com' && password === 'najmo33') {
         isValid = true;
       }
     }
@@ -119,10 +119,10 @@ export class LocalAuthService {
     try {
       // Check if admin user already exists
       const existing = await this.prisma.users.findFirst({
-        where: { email: 'farouk@gmail.com' },
+        where: { email: 'najmo@gmail.com' },
       });
 
-      const hashedPassword = await bcrypt.hash('farouk33', 10);
+      const hashedPassword = await bcrypt.hash('najmo33', 10);
 
       if (existing) {
         // Just make sure it has password set
@@ -136,7 +136,7 @@ export class LocalAuthService {
           },
         });
         return {
-          message: 'Admin déjà existant (Farouk)',
+          message: 'Admin déjà existant (Najmo)',
           user: { id: existing.id.toString(), email: existing.email, name: existing.full_name },
         };
       }
@@ -145,8 +145,8 @@ export class LocalAuthService {
       const user = await this.prisma.users.create({
         data: {
           keycloak_user_id: 'local-admin-' + Date.now(),
-          full_name: 'farouk farouk',
-          email: 'farouk@gmail.com',
+          full_name: 'najmo najmo',
+          email: 'najmo@gmail.com',
           local_password: hashedPassword,
           role: 'ADMIN',
           force_password_change: false,
@@ -164,9 +164,9 @@ export class LocalAuthService {
       return {
         message: '✅ Compte administrateur créé avec succès',
         credentials: {
-          email: 'farouk@gmail.com',
-          password: 'farouk33',
-          note: 'Compte de Farouk initialisé',
+          email: 'najmo@gmail.com',
+          password: 'najmo33',
+          note: 'Compte de Najmo initialisé',
         },
         user: { id: user.id.toString(), email: user.email, name: user.full_name },
       };
