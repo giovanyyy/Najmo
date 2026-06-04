@@ -1,3 +1,5 @@
+import 'passport';
+import 'passport-jwt';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
