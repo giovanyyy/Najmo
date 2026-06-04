@@ -4,7 +4,7 @@
  * Falls back to no-auth requests when session token is unavailable.
  */
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
 
 export function getApiHeaders(accessToken?: string | null): Record<string, string> {
   const headers: Record<string, string> = {

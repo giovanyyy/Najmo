@@ -47,7 +47,7 @@ export default function ExpensesPage() {
 
   const fetchInitialData = async () => {
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
       const headers: Record<string, string> = {};
       if ((session as any)?.accessToken) {
         headers['Authorization'] = `Bearer ${(session as any).accessToken}`;
@@ -75,7 +75,7 @@ export default function ExpensesPage() {
 
   const fetchExpenses = async () => {
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
       const headers: Record<string, string> = {};
       if ((session as any)?.accessToken) {
         headers['Authorization'] = `Bearer ${(session as any).accessToken}`;

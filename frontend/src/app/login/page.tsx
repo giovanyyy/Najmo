@@ -24,7 +24,7 @@ export default function LoginPage() {
   useEffect(() => {
     const runSetup = async () => {
       try {
-        const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+        const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
         await fetch(`${apiBase}/auth/setup-admin`, { method: 'POST' });
         setSetupDone(true);
       } catch {
